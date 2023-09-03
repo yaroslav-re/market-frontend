@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  background-color: #1c1c1c;
+  color: white;
+}
+
+.showing {
+  float: right;
+  display: flex;
+  margin: 10px;
+}
+
+.showing {
+  h6 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: lighter;
+    margin-right: 10px;
+  }
+  select {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal;
+    outline: 0;
+    border: 0;
+    background-color: #1c1c1c;
+    color: white;
+  }
+  select option {
+    border-radius: 0;
+  }
+}
