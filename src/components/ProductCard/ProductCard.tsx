@@ -1,5 +1,4 @@
-import { Button, Card, CardContent, Typography, styled, } from '@material-ui/core'
-import { AspectRatio } from '@material-ui/icons'
+import { Card, CardContent, Typography, styled, } from '@material-ui/core'
 import CardOverflow from '@mui/joy/CardOverflow';
 import Link from '@mui/joy/Link';
 import { Part } from 'features/Parts/types';
@@ -28,10 +27,10 @@ export const ProductCard = (part: any) => {
     </CardOverflow>
     <CardContent>
       <Link textColor="text.primary" color='neutral'>
-        <Typography variant='h6' >{part.name}</Typography>
+        <Typography variant='h6' >{part.part.name}</Typography>
       </Link>
-      <Typography style={{ fontSize: 14}}></Typography>
-      <Typography style={{ fontSize: 19, marginTop: 8}}>762$</Typography>
+      <Typography style={{ fontSize: 14}}>{part.part.description}</Typography>
+      <Typography style={{ fontSize: 19, marginTop: 8}}>{`${part.part.price}$`}</Typography>
     </CardContent>
     <CardOverflow>
       <AddingToCartButton>
@@ -41,5 +40,3 @@ export const ProductCard = (part: any) => {
   </Card>
   )
 }
-
-// дз: надо сделать

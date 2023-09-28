@@ -2,7 +2,7 @@ import React from 'react'
 import { ProductCard } from 'components/ProductCard'
 import { useParts } from './model/useParts'
 import { v4 as uuidv4 } from 'uuid';
-import { Backdrop, CircularProgress } from '@material-ui/core';
+import { Backdrop, CircularProgress, Grid } from '@material-ui/core';
 
 export const Parts = () => {
   const {view} = useParts()
@@ -15,14 +15,15 @@ export const Parts = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
     </div>) : (
-    <div style={{ width: "100%", display: "inline"}}>
-      {console.log("!!!!!!!!!!!!!", view.parts[0].name)}
-    {view.parts.map((part) => {
-      return <ProductCard part={part} key={uuidv4()}/>;
-    })}
+    <div>
+      {/* 
+      // @ts-ignore */}
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+        {view.parts.length > 0 &&  view.parts.map((part, index) => {
+          return <ProductCard part={part} key={uuidv4()}/>
+        })}
+      </Grid>
   </div>)
     
   )
 }
-
-// сделать loader и map запчастей из backend

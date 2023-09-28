@@ -1,5 +1,5 @@
 import {Builder} from "builder-pattern"
-import { PartsHandler, PartsModel, PartsView } from "../types";
+import { PartsHandler, PartsModel, PartsView, PriceInputChange } from "../types";
 
 
 export class PartsViewModel {
@@ -14,6 +14,24 @@ export class PartsViewModel {
 
   get view(): PartsView {
     return this._view
+  }
+
+  setPriceRange = (val: number | number[]) => {
+    this.handlers.setPriceRange(val)
+  }
+
+  handlePriceInputChange = (e: React.ChangeEvent<HTMLInputElement>, type: PriceInputChange) => {
+    let newRange
+    if (type === "lower") {
+      newRange = [...[this.model.priceRange]]
+      newRange[0] = Number(e.target.value)
+      this.setPriceRange(newRange as number | number[])
+    }
+    if (type === "upper") {
+      newRange = [...[this.model.priceRange]]
+      newRange[1] = Number(e.target.value)
+      this.setPriceRange(newRange as number | number[])
+    }
   }
 
   create(): PartsViewModel {
