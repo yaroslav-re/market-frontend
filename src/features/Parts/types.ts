@@ -2,6 +2,7 @@ export type PartsView = {
   parts: Part[],
   loading: boolean,
   filter: {} | Filtering,
+  priceRange: number | number[],
 }
 
 export type Part = {
@@ -25,6 +26,7 @@ export type PartsHandler = {
   setFilter: (filtering: {} | Filtering) => void,
   setLoading: (isLoading: boolean) => void,
   setPriceRange: (priceRange: number | number[]) => void,
+  onInputCommitHandler: () => void,
 }
 
 export type Filtering = {

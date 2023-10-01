@@ -21,6 +21,7 @@ export class PartsViewModel {
   }
 
   handlePriceInputChange = (e: React.ChangeEvent<HTMLInputElement>, type: PriceInputChange) => {
+    console.log("!!!!!!")
     let newRange
     if (type === "lower") {
       newRange = [...[this.model.priceRange]]
@@ -34,11 +35,14 @@ export class PartsViewModel {
     }
   }
 
+  onInputCommitHandler = () => this.handlers.onInputCommitHandler()
+
   create(): PartsViewModel {
     this._view = Builder<PartsView>()
       .parts(this.model.parts)
       .loading(this.model.loading)
       .filter(this.model.filter)
+      .priceRange(this.model.priceRange)
       .build()
     
     return this
