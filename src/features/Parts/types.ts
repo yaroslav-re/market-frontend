@@ -1,50 +1,54 @@
 export type PartsView = {
-  parts: Part[],
-  loading: boolean,
-  filter: {} | Filtering,
-  priceRange: number | number[],
-}
+  parts: Part[];
+  loading: boolean;
+  filter: {} | Filtering;
+  priceRange: number[];
+};
 
 export type Part = {
-  id: string,
-  name: string,
-  description: string,
-  price: number,
-  rating: number,
-  img: string,
-}
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  rating: number;
+  img: string;
+};
 
 export type PartsModel = {
-  parts: Part[],
-  loading: boolean,
-  filter: {} | Filtering,
-  priceRange: number | number[],
-}
+  parts: Part[];
+  loading: boolean;
+  filter: {} | Filtering;
+  priceRange: number[];
+};
 
 export type PartsHandler = {
-  setParts: (parts: Part[]) => void,
-  setFilter: (filtering: {} | Filtering) => void,
-  setLoading: (isLoading: boolean) => void,
-  setPriceRange: (priceRange: number | number[]) => void,
-  onInputCommitHandler: () => void,
-}
+  setParts: (parts: Part[]) => void;
+  setFilter: (filtering: {} | Filtering) => void;
+  setLoading: (isLoading: boolean) => void;
+  setPriceRange: (priceRange: number[]) => void;
+  onInputCommitHandler: () => void;
+  handlePriceInputChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: PriceInputChange
+  ) => void;
+};
 
 export type Filtering = {
-  price: {gte: string; lte: string}
-}
+  price: { gte: string; lte: string };
+};
 
 export type Sorting = {
-  ratings: Order,
-  price?: Order,
-}
+  ratings: Order;
+  price?: Order;
+};
 
-export type Order = "descending" | "ascending"
+export type Order = "descending" | "ascending";
 
-export type PriceInputChange = "lower" | "upper"
+export type PriceInputChange = "lower" | "upper";
 
 export type UIValues = {
-  filtering?: Filtering,
-  sorting?: Sorting,
-  maxPrice: number,
-  minPrice: number,
-}
+  filtering?: Filtering;
+  sorting?: Sorting;
+  maxPrice: number;
+  minPrice: number;
+};
