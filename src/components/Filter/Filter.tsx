@@ -23,7 +23,6 @@ export const Filter = () => {
     margin: 20,
     borderRadius: 5,
   };
-
   return (
     <>
       <Box sx={style}>
@@ -35,24 +34,21 @@ export const Filter = () => {
             >
               Price
             </Typography>
-            <TextField
+            <Input
               style={{ marginRight: 2 }}
+              disabled={view.loading}
               placeholder="from"
-              // @ts-ignore
               value={view.priceRange[0]}
-              // @ts-ignore
               onBlur={onInputCommitHandler}
               type="number"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handlePriceInputChange(e, "lower")
-              }
+                handlePriceInputChange(e, "lower")}
             />
-            <TextField
+            <Input
+              disabled={view.loading}
               placeholder="to"
               type="number"
-              // @ts-ignore
               value={view.priceRange[1]}
-              // @ts-ignore
               onBlur={onInputCommitHandler}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 handlePriceInputChange(e, "upper")

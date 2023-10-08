@@ -16,7 +16,7 @@ export const Parts = () => {
     </div>
   ) : (
     <div>
-      <Filter></Filter>
+      <Filter />
       <Grid
         container
         // @ts-ignore
