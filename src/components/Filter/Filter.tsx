@@ -4,16 +4,25 @@ import Modal from "@mui/material/Modal";
 import {
   Box,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
+  Grid,
   Input,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { useParts } from "features/Parts/model/useParts";
 
 export const Filter = () => {
-  const { handlePriceInputChange, view, onInputCommitHandler } = useParts();
+  const {
+    handlePriceInputChange,
+    view,
+    onInputCommitHandler,
+    handleSortChange,
+  } = useParts();
 
   const style = {
     width: 400,
@@ -42,7 +51,8 @@ export const Filter = () => {
               onBlur={onInputCommitHandler}
               type="number"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handlePriceInputChange(e, "lower")}
+                handlePriceInputChange(e, "lower")
+              }
             />
             <Input
               disabled={view.loading}
@@ -80,21 +90,31 @@ export const Filter = () => {
           </div>
         </div>
         <div>
-          <Typography variant="h6" style={{ color: "black", marginBottom: 2 }}>
-            Sort by...
-          </Typography>
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Price"
-              style={{ color: "black" }}
-            />
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Popularity"
-              style={{ color: "black" }}
-            />
-          </FormGroup>
+          <Grid item xs={12} sm={6}>
+            <Typography gutterBottom>Sort by</Typography>
+
+            <FormControl component="fieldset">
+              <RadioGroup
+                aria-label="reviews-order"
+                name="reviews-order"
+                value={view.priceOrder}
+                onChange={handleSortChange}
+              >
+                <FormControlLabel
+                  value="descending"
+                  disabled={view.loading}
+                  control={<Radio />}
+                  label="price descending"
+                />
+                <FormControlLabel
+                  value="ascending"
+                  disabled={view.loading}
+                  control={<Radio />}
+                  label="price ascending"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
         </div>
       </Box>
     </>

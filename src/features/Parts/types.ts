@@ -3,6 +3,8 @@ export type PartsView = {
   loading: boolean;
   filter: {} | Filtering;
   priceRange: number[];
+  sorting: {} | Sorting;
+  priceOrder: Order;
 };
 
 export type Part = {
@@ -19,6 +21,8 @@ export type PartsModel = {
   loading: boolean;
   filter: {} | Filtering;
   priceRange: number[];
+  sorting: {} | Sorting;
+  priceOrder: Order;
 };
 
 export type PartsHandler = {
@@ -31,6 +35,9 @@ export type PartsHandler = {
     e: React.ChangeEvent<HTMLInputElement>,
     type: PriceInputChange
   ) => void;
+  setSorting: (sorting: {} | Filtering) => void;
+  handleSortChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setPriceOrder: (priceOrder: Order) => void;
 };
 
 export type Filtering = {
@@ -38,8 +45,8 @@ export type Filtering = {
 };
 
 export type Sorting = {
-  ratings: Order;
-  price?: Order;
+  // ratings: Order;
+  price: Order;
 };
 
 export type Order = "descending" | "ascending";

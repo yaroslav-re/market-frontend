@@ -31,12 +31,16 @@ export class PartsViewModel {
     type: PriceInputChange
   ) => this.handlers.handlePriceInputChange(e, type);
 
+  handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => this.handlers.handleSortChange(e)
+
   create(): PartsViewModel {
     this._view = Builder<PartsView>()
       .parts(this.model.parts)
       .loading(this.model.loading)
       .filter(this.model.filter)
       .priceRange(this.model.priceRange)
+      .sorting(this.model.sorting)
+      .priceOrder(this.model.priceOrder)
       .build();
 
     return this;

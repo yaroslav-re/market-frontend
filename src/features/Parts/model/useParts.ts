@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Part, Filtering, UIValues, PriceInputChange } from "../types";
+import { Part, Filtering, UIValues, PriceInputChange, Sorting, Order } from "../types";
 import axios, { Canceler } from "axios";
 import { PartsViewModel } from "./PartsViewModel";
 import { useHistory, useLocation } from "react-router-dom";
@@ -9,18 +9,14 @@ const useParts = () => {
   const location = useLocation();
 
   const params = location.search ? location.search : null;
+  console.log(params)
 
   const [parts, setParts] = useState<Part[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<{} | Filtering>("");
   const [priceRange, setPriceRange] = useState<number[]>([0, 200000]);
-
-  const updateUIValues = (UIValues: UIValues) => {
-    if (UIValues.filtering?.price) {
-      let priceFilter = UIValues.filtering.price;
-      setPriceRange([Number(priceFilter.gte), Number(priceFilter.lte)]);
-    }
-  };
+  const [sorting, setSorting] = useState<{} | Sorting>("")
+  const [priceOrder, setPriceOrder] = useState<Order>("ascending")
 
   useEffect(() => {
     let cancel: Canceler;
@@ -28,7 +24,7 @@ const useParts = () => {
     const fetchParts = async () => {
       setLoading(true);
       try {
-        let query;
+        let query: any
 
         if (params && !filter) {
           query = params;
@@ -36,11 +32,22 @@ const useParts = () => {
           query = filter;
         }
 
+        if (sorting) {
+          if (query.length === 0) {
+            query = `?sort=${sorting}`
+          } else {
+            query = query + "&sort=" + sorting
+          }
+        }
+
+        console.log(query)
+
         const { data } = await axios({
           method: "GET",
           url: `/api/parts${query}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
+
         setParts(data.data);
         setLoading(false);
         updateUIValues(data.UIValues);
@@ -51,7 +58,19 @@ const useParts = () => {
     };
     fetchParts();
     return () => cancel();
-  }, [filter, params]);
+  }, [filter, params, sorting]);
+
+  const updateUIValues = (UIValues: UIValues) => {
+    if (UIValues.filtering?.price) {
+      let priceFilter = UIValues.filtering.price;
+      setPriceRange([Number(priceFilter.gte), Number(priceFilter.lte)]);
+    }
+
+    if (UIValues.sorting?.price) {
+      let priceSort = UIValues.sorting.price;
+      setPriceOrder(priceSort);
+    }
+  };
 
   const handlePriceInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -81,10 +100,21 @@ const useParts = () => {
     history.push(urlFilter);
   };
 
+  const handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    setPriceOrder(e.target.value as Order)
+
+    if (e.target.value === "ascending") {
+      setSorting("price")
+    } else if (e.target.value === "descending") {
+      setSorting("-price")
+    }
+  }
+
   return useMemo(
     () =>
       new PartsViewModel(
-        { parts, loading, filter, priceRange },
+        { parts, loading, filter, priceRange, sorting, priceOrder },
         {
           setParts,
           setLoading,
@@ -92,9 +122,12 @@ const useParts = () => {
           setPriceRange,
           onInputCommitHandler,
           handlePriceInputChange,
+          setSorting,
+          handleSortChange,
+          setPriceOrder
         }
       ).create(),
-    [parts, loading, filter, priceRange]
+    [parts, loading, filter, priceRange, sorting, priceOrder]
   );
 };
 
