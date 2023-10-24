@@ -6,7 +6,12 @@ import { Backdrop, CircularProgress, Grid } from "@material-ui/core";
 import { Filter } from "components/Filter";
 
 export const Parts = () => {
-  const { view } = useParts();
+  const {
+    handlePriceInputChange,
+    view,
+    onInputCommitHandler,
+    handleSortChange,
+  } = useParts();
 
   return view.loading ? (
     <div>
@@ -16,7 +21,12 @@ export const Parts = () => {
     </div>
   ) : (
     <div>
-      <Filter />
+      <Filter
+        handlePriceInputChange={handlePriceInputChange}
+        onInputCommitHandler={onInputCommitHandler}
+        handleSortChange={handleSortChange}
+        view={view}
+      />
       <Grid
         container
         // @ts-ignore

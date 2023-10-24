@@ -94,7 +94,6 @@ const useParts = () => {
   };
 
   const buildRangeFilter = (newValue: number[]) => {
-    // @ts-ignore
     const urlFilter = `?price[gte]=${newValue[0]}&price[lte]=${newValue[1]}`;
     setFilter(urlFilter);
     history.push(urlFilter);

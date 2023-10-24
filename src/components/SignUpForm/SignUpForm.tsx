@@ -7,6 +7,10 @@ export const SignUpForm = () => {
     color: "inherit",
     marginTop: "15px",
   }));
+  // @ts-ignore
+  const handleRegister = (e) => {
+    console.log(e)
+  }
 
   return (
     <>
@@ -17,6 +21,8 @@ export const SignUpForm = () => {
           alignItems: "center",
           marginTop: "15%",
         }}
+        // @ts-ignore
+        onSubmit={(e) => {handleRegister(e)}}
       >
         <Typography variant="h3">Sign Up</Typography>
         <StyledInput placeholder="Name" />

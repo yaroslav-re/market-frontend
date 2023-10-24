@@ -15,15 +15,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useParts } from "features/Parts/model/useParts";
+import { PartsView } from "features/Parts/types";
 
-export const Filter = () => {
-  const {
-    handlePriceInputChange,
-    view,
-    onInputCommitHandler,
-    handleSortChange,
-  } = useParts();
-
+export const Filter = (props: any) => {
   const style = {
     width: 400,
     bgcolor: "background.paper",
@@ -32,6 +26,14 @@ export const Filter = () => {
     margin: 20,
     borderRadius: 5,
   };
+
+  const {
+    handlePriceInputChange,
+    view,
+    onInputCommitHandler,
+    handleSortChange,
+  } = props
+
   return (
     <>
       <Box sx={style}>
@@ -95,8 +97,6 @@ export const Filter = () => {
 
             <FormControl component="fieldset">
               <RadioGroup
-                aria-label="reviews-order"
-                name="reviews-order"
                 value={view.priceOrder}
                 onChange={handleSortChange}
               >
@@ -104,13 +104,13 @@ export const Filter = () => {
                   value="descending"
                   disabled={view.loading}
                   control={<Radio />}
-                  label="price descending"
+                  label="Price descending"
                 />
                 <FormControlLabel
                   value="ascending"
                   disabled={view.loading}
                   control={<Radio />}
-                  label="price ascending"
+                  label="Price ascending"
                 />
               </RadioGroup>
             </FormControl>
