@@ -9,8 +9,9 @@ export const SignUpForm = () => {
   }));
   // @ts-ignore
   const handleRegister = (e) => {
-    console.log(e)
-  }
+    e.preventDefault();
+    console.log(e.target);
+  };
 
   return (
     <>
@@ -20,9 +21,12 @@ export const SignUpForm = () => {
           flexDirection: "column",
           alignItems: "center",
           marginTop: "15%",
+          color: "white",
         }}
         // @ts-ignore
-        onSubmit={(e) => {handleRegister(e)}}
+        onSubmit={(e) => {
+          handleRegister(e);
+        }}
       >
         <Typography variant="h3">Sign Up</Typography>
         <StyledInput placeholder="Name" />
@@ -34,6 +38,7 @@ export const SignUpForm = () => {
             backgroundColor: "#484fb8",
             color: "inherit",
           }}
+          type="submit"
         >
           Submit
         </Button>

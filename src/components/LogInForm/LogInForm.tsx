@@ -1,4 +1,5 @@
 import { Button, Input, Typography, styled } from "@material-ui/core";
+import { useParts } from "features/Parts/model/useParts";
 import React from "react";
 
 export const LogInForm = () => {
@@ -8,6 +9,8 @@ export const LogInForm = () => {
     marginTop: "15px",
   }));
 
+  const { view, handleLogin, setUsername, setPassword } = useParts();
+
   return (
     <>
       <form
@@ -16,11 +19,23 @@ export const LogInForm = () => {
           flexDirection: "column",
           alignItems: "center",
           marginTop: "15%",
+          color: "white",
+        }}
+        onSubmit={(e) => {
+          handleLogin(e);
         }}
       >
         <Typography variant="h3">Log In</Typography>
-        <StyledInput placeholder="Name" />
-        <StyledInput placeholder="Password" />
+        <StyledInput
+          placeholder="Name"
+          value={view.username}
+          // onChange={({ target }) => setUsername(target.value)}
+        />
+        <StyledInput
+          placeholder="Password"
+          value={view.password}
+          // onChange={({ target }) => setPassword(target.value)}
+        />
         <Button
           variant="contained"
           style={{

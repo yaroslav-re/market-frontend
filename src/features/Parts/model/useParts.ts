@@ -1,5 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
-import { Part, Filtering, UIValues, PriceInputChange, Sorting, Order } from "../types";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import {
+  Part,
+  Filtering,
+  UIValues,
+  PriceInputChange,
+  Sorting,
+  Order,
+} from "../types";
 import axios, { Canceler } from "axios";
 import { PartsViewModel } from "./PartsViewModel";
 import { useHistory, useLocation } from "react-router-dom";
@@ -9,14 +16,15 @@ const useParts = () => {
   const location = useLocation();
 
   const params = location.search ? location.search : null;
-  console.log(params)
 
   const [parts, setParts] = useState<Part[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<{} | Filtering>("");
   const [priceRange, setPriceRange] = useState<number[]>([0, 200000]);
-  const [sorting, setSorting] = useState<{} | Sorting>("")
-  const [priceOrder, setPriceOrder] = useState<Order>("ascending")
+  const [sorting, setSorting] = useState<{} | Sorting>("");
+  const [priceOrder, setPriceOrder] = useState<Order>("ascending");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
     let cancel: Canceler;
@@ -24,7 +32,7 @@ const useParts = () => {
     const fetchParts = async () => {
       setLoading(true);
       try {
-        let query: any
+        let query: any;
 
         if (params && !filter) {
           query = params;
@@ -34,13 +42,11 @@ const useParts = () => {
 
         if (sorting) {
           if (query.length === 0) {
-            query = `?sort=${sorting}`
+            query = `?sort=${sorting}`;
           } else {
-            query = query + "&sort=" + sorting
+            query = query + "&sort=" + sorting;
           }
         }
-
-        console.log(query)
 
         const { data } = await axios({
           method: "GET",
@@ -74,7 +80,7 @@ const useParts = () => {
 
   const handlePriceInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    type: PriceInputChange
+    type: PriceInputChange,
   ) => {
     let newRange;
     if (type === "lower") {
@@ -100,20 +106,42 @@ const useParts = () => {
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    setPriceOrder(e.target.value as Order)
+    setPriceOrder(e.target.value as Order);
 
     if (e.target.value === "ascending") {
-      setSorting("price")
+      setSorting("price");
     } else if (e.target.value === "descending") {
-      setSorting("-price")
+      setSorting("-price");
     }
-  }
+  };
+
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3001/api/login", {
+        username,
+        password,
+      });
+      const user = response.data;
+      console.log(user);
+    } catch (exception) {
+      console.log("you are not exist");
+    }
+  };
 
   return useMemo(
     () =>
       new PartsViewModel(
-        { parts, loading, filter, priceRange, sorting, priceOrder },
+        {
+          parts,
+          loading,
+          filter,
+          priceRange,
+          sorting,
+          priceOrder,
+          username,
+          password,
+        },
         {
           setParts,
           setLoading,
@@ -123,10 +151,13 @@ const useParts = () => {
           handlePriceInputChange,
           setSorting,
           handleSortChange,
-          setPriceOrder
-        }
+          setPriceOrder,
+          handleLogin,
+          setUsername,
+          setPassword,
+        },
       ).create(),
-    [parts, loading, filter, priceRange, sorting, priceOrder]
+    [parts, loading, filter, priceRange, sorting, priceOrder],
   );
 };
 
