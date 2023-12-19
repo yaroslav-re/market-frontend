@@ -32,74 +32,43 @@ export const Filter = (props: any) => {
     view,
     onInputCommitHandler,
     handleSortChange,
-  } = props
+  } = props;
 
   return (
     <>
       <Box sx={style}>
         <div>
-          <div>
-            <Typography
-              style={{ color: "black", marginBottom: 2 }}
-              variant="h6"
-            >
-              Price
-            </Typography>
-            <Input
-              style={{ marginRight: 2 }}
-              disabled={view.loading}
-              placeholder="from"
-              value={view.priceRange[0]}
-              onBlur={onInputCommitHandler}
-              type="number"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handlePriceInputChange(e, "lower")
-              }
-            />
-            <Input
-              disabled={view.loading}
-              placeholder="to"
-              type="number"
-              value={view.priceRange[1]}
-              onBlur={onInputCommitHandler}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handlePriceInputChange(e, "upper")
-              }
-            />
-          </div>
-          <div style={{ marginTop: 8 }}>
-            <Typography
-              style={{ color: "black", marginBottom: 2 }}
-              variant="h6"
-            >
-              Rating
-            </Typography>
-            <TextField
-              style={{ marginRight: 2 }}
-              placeholder="from"
-              type="number"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handlePriceInputChange(e, "lower")
-              }
-            />
-            <TextField
-              placeholder="to"
-              type="number"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handlePriceInputChange(e, "upper")
-              }
-            />
-          </div>
+          <Typography style={{ color: "black", marginBottom: 2 }} variant="h6">
+            Price
+          </Typography>
+          <Input
+            style={{ marginRight: 2 }}
+            disabled={view.loading}
+            placeholder="from"
+            value={view.priceRange[0]}
+            onBlur={onInputCommitHandler}
+            type="number"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handlePriceInputChange(e, "lower")
+            }
+          />
+          <Input
+            disabled={view.loading}
+            placeholder="to"
+            type="number"
+            value={view.priceRange[1]}
+            onBlur={onInputCommitHandler}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handlePriceInputChange(e, "upper")
+            }
+          />
         </div>
-        <div>
+        <div style={{ marginTop: 8 }}>
           <Grid item xs={12} sm={6}>
-            <Typography gutterBottom>Sort by</Typography>
+            <Typography variant="h6">Sort by</Typography>
 
             <FormControl component="fieldset">
-              <RadioGroup
-                value={view.priceOrder}
-                onChange={handleSortChange}
-              >
+              <RadioGroup value={view.priceOrder} onChange={handleSortChange}>
                 <FormControlLabel
                   value="descending"
                   disabled={view.loading}

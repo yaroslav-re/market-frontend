@@ -23,8 +23,7 @@ const useParts = () => {
   const [priceRange, setPriceRange] = useState<number[]>([0, 200000]);
   const [sorting, setSorting] = useState<{} | Sorting>("");
   const [priceOrder, setPriceOrder] = useState<Order>("ascending");
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [currentPartId, setCurrentPartId] = useState<string>("");
 
   useEffect(() => {
     let cancel: Canceler;
@@ -115,20 +114,6 @@ const useParts = () => {
     }
   };
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:3001/api/login", {
-        username,
-        password,
-      });
-      const user = response.data;
-      console.log(user);
-    } catch (exception) {
-      console.log("you are not exist");
-    }
-  };
-
   return useMemo(
     () =>
       new PartsViewModel(
@@ -139,8 +124,6 @@ const useParts = () => {
           priceRange,
           sorting,
           priceOrder,
-          username,
-          password,
         },
         {
           setParts,
@@ -152,9 +135,6 @@ const useParts = () => {
           setSorting,
           handleSortChange,
           setPriceOrder,
-          handleLogin,
-          setUsername,
-          setPassword,
         },
       ).create(),
     [parts, loading, filter, priceRange, sorting, priceOrder],

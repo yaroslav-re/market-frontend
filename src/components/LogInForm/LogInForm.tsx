@@ -1,6 +1,7 @@
-import { Button, Input, Typography, styled } from "@material-ui/core";
-import { useParts } from "features/Parts/model/useParts";
-import React from "react";
+import { Box, Button, Input, Typography, styled } from "@material-ui/core";
+import axios from "axios";
+
+import React, { FormEvent, useState } from "react";
 
 export const LogInForm = () => {
   const StyledInput = styled(Input)(() => ({
@@ -9,11 +10,27 @@ export const LogInForm = () => {
     marginTop: "15px",
   }));
 
-  const { view, handleLogin, setUsername, setPassword } = useParts();
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+
+    try {
+      const response = await axios.post("http://localhost:3001/api/login", {
+        email: data.get("email"),
+        password: data.get("password"),
+      });
+      const user = response.data;
+      console.log(user);
+    } catch (exception) {
+      console.log("you don't exist");
+    }
+  };
 
   return (
     <>
-      <form
+      <Box
+        component="form"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -21,22 +38,27 @@ export const LogInForm = () => {
           marginTop: "15%",
           color: "white",
         }}
-        onSubmit={(e) => {
-          handleLogin(e);
-        }}
+        onSubmit={handleLogin}
       >
         <Typography variant="h3">Log In</Typography>
         <StyledInput
-          placeholder="Name"
-          value={view.username}
-          // onChange={({ target }) => setUsername(target.value)}
+          required
+          fullWidth
+          id="email"
+          name="email"
+          autoComplete="email"
+          autoFocus
         />
         <StyledInput
-          placeholder="Password"
-          value={view.password}
-          // onChange={({ target }) => setPassword(target.value)}
+          required
+          fullWidth
+          name="password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
         />
         <Button
+          type="submit"
           variant="contained"
           style={{
             marginTop: "15px",
@@ -46,7 +68,7 @@ export const LogInForm = () => {
         >
           Submit
         </Button>
-      </form>
+      </Box>
     </>
   );
 };

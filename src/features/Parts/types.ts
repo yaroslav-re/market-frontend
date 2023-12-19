@@ -1,5 +1,3 @@
-import { FormEvent } from "react";
-
 export type PartsView = {
   parts: Part[];
   loading: boolean;
@@ -7,8 +5,6 @@ export type PartsView = {
   priceRange: number[];
   sorting: {} | Sorting;
   priceOrder: Order;
-  username: string;
-  password: string;
 };
 
 export type Part = {
@@ -27,8 +23,6 @@ export type PartsModel = {
   priceRange: number[];
   sorting: {} | Sorting;
   priceOrder: Order;
-  username: string;
-  password: string;
 };
 
 export type PartsHandler = {
@@ -44,9 +38,6 @@ export type PartsHandler = {
   setSorting: (sorting: {} | Filtering) => void;
   handleSortChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setPriceOrder: (priceOrder: Order) => void;
-  handleLogin: (e: FormEvent<HTMLFormElement>) => void;
-  setUsername: (username: string) => void;
-  setPassword: (password: string) => void;
 };
 
 export type Filtering = {

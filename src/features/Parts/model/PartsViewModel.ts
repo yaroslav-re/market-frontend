@@ -35,12 +35,6 @@ export class PartsViewModel {
   handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     this.handlers.handleSortChange(e);
 
-  handleLogin = (e: FormEvent<HTMLFormElement>) => this.handlers.handleLogin(e);
-
-  setUsername = (username: string) => this.handlers.setUsername(username);
-
-  setPassword = (password: string) => this.handlers.setPassword(password);
-
   create(): PartsViewModel {
     this._view = Builder<PartsView>()
       .parts(this.model.parts)
@@ -49,8 +43,6 @@ export class PartsViewModel {
       .priceRange(this.model.priceRange)
       .sorting(this.model.sorting)
       .priceOrder(this.model.priceOrder)
-      .username(this.model.username)
-      .password(this.model.password)
       .build();
 
     return this;
